@@ -29,16 +29,19 @@ def cria_janela_transacao():
         quantidade_venda = quantidade_entrada.get()
         preco_venda = preco_entrada.get()
         tupla_venda = (quantidade_venda, preco_venda)
-        if chave_venda in dicVenda and chave_venda in dicEstoque:
-            lista_venda = dicVenda[chave_venda]
-            lista_venda.append(tupla_venda)
-            dicVenda[chave_venda] = listaVenda#---------------------->>> ESCREVER NO ARQUIVO
-        else:
-            if chave_venda in dicEstoque:
+
+        if chave_venda in dicEstoque:
+            
+            if chave_venda in dicVenda:
+                lista_venda = dicVenda[chave_venda]
+                lista_venda.append(tupla_venda)
+                dicVenda[chave_venda] = listaVenda#---------------------->>> ESCREVER NO ARQUIVO
+
+            else:
                 lista_venda = []
                 lista_venda.append(tupla_venda)
                 dicVenda[chave_venda] = listaVenda
-        if chave_venda in dicEstoque:
+
             dicEstoque[chave_venda] += -int(tupla_venda[0])
             if dicEstoque[chave_venda] <= 0:
                 dicEstoque.pop(chave_venda)
