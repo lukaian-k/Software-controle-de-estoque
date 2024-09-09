@@ -26,42 +26,10 @@ def cria_janela_transacao():
     #VENDAS
     def registra_transacao_venda():
         chave_venda = produto_entrada.get()
-        quantidade_venda = quantidade_entrada.get()
-        preco_venda = preco_entrada.get()
-        tupla_venda = (quantidade_venda, preco_venda)
-
-        if chave_venda in dicEstoque:
-            
-            if chave_venda in dicVenda:
-                lista_venda = dicVenda[chave_venda]
-                lista_venda.append(tupla_venda)
-                dicVenda[chave_venda] = listaVenda#---------------------->>> ESCREVER NO ARQUIVO
-
-            else:
-                lista_venda = []
-                lista_venda.append(tupla_venda)
-                dicVenda[chave_venda] = listaVenda
-
-            dicEstoque[chave_venda] += -int(tupla_venda[0])
-            if dicEstoque[chave_venda] <= 0:
-                dicEstoque.pop(chave_venda)
-            
-        else:
-            dicEstoque[chave_venda] = -int(tupla_venda[0])
-            if dicEstoque[chave_venda] < 0:
-                dicEstoque.pop(chave_venda)
-        
-        print(dicEstoque)
-        print(dicVenda) 
-        
-    #COMPRAS
-    def registra_transacao_venda():
-        chave_venda = produto_entrada.get()
         quantidade_venda = int(quantidade_entrada.get())  # Convertendo para int aqui
         preco_venda = preco_entrada.get()
         tupla_venda = (quantidade_venda, preco_venda)
 
-        # Atualiza vendas e estoque
         atualiza_vendas(chave_venda, tupla_venda)
         atualiza_estoque(chave_venda, quantidade_venda)
 
