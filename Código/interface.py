@@ -21,12 +21,12 @@ def estoque_total():
      return dicEstoque
 
 def cria_janela_transacao():
-    
     #----------------------FUNCIONAMENTO DA JANELA TRANSAÇAO-----------------------------
+    
     #VENDAS
     def registra_transacao_venda():
         chave_venda = produto_entrada.get()
-        quantidade_venda = int(quantidade_entrada.get())  # Convertendo para int aqui
+        quantidade_venda = int(quantidade_entrada.get())
         preco_venda = preco_entrada.get()
         tupla_venda = (quantidade_venda, preco_venda)
 
@@ -37,11 +37,9 @@ def cria_janela_transacao():
         print(dicVenda)
 
     def atualiza_vendas(chave_venda, tupla_venda):
-        # Usa .setdefault para evitar if-else
         dicVenda.setdefault(chave_venda, []).append(tupla_venda)
 
     def atualiza_estoque(chave_venda, quantidade_venda):
-        # Usa .get para evitar if-else
         estoque_atual = dicEstoque.get(chave_venda, 0) - quantidade_venda
 
         if estoque_atual <= 0:
