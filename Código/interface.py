@@ -55,27 +55,33 @@ def cria_janela_transacao():
         print(dicVenda) 
         
     #COMPRAS
-    def registra_transacao_compra():
-        chave_compra = produto_entrada.get()
-        quantidade_compra = quantidade_entrada.get()
-        preco_compra = preco_entrada.get()
-        tupla_compra = (quantidade_compra, preco_compra)
-        if chave_compra in dicCompra:
-            lista_compra = dicCompra[chave_compra]
-            lista_compra.append(tupla_compra)
-            dicCompra[chave_compra] = listaCompra#---------------------->>> ESCREVER NO ARQUIVO
-        else:
-            lista_compra = []
-            lista_compra.append(tupla_compra)
-            dicCompra[chave_compra] = listaCompra
-        if chave_compra in dicEstoque:
-            dicEstoque[chave_compra] += int(tupla_compra[0])
-            
-        else:
-            dicEstoque[chave_compra] = int(tupla_compra[0])
-        
-        print(dicCompra) 
+    def registra_transacao_venda():
+        chave_venda = produto_entrada.get()
+        quantidade_venda = quantidade_entrada.get()
+        preco_venda = preco_entrada.get()
+        tupla_venda = (quantidade_venda, preco_venda)
+
+        atualiza_vendas(chave_venda, tupla_venda)
+        atualiza_estoque(chave_venda, int(tupla_venda[0]))
+
         print(dicEstoque)
+        print(dicVenda)
+
+    def atualiza_vendas(chave_venda, tupla_venda):
+        if chave_venda in dicVenda:
+            dicVenda[chave_venda].append(tupla_venda)
+        else:
+            dicVenda[chave_venda] = [tupla_venda]
+
+    def atualiza_estoque(chave_venda, quantidade_venda):
+        if chave_venda in dicEstoque:
+            dicEstoque[chave_venda] -= quantidade_venda
+            if dicEstoque[chave_venda] <= 0:
+                dicEstoque.pop(chave_venda)
+        else:
+            dicEstoque[chave_venda] = -quantidade_venda
+            if dicEstoque[chave_venda] < 0:
+                dicEstoque.pop(chave_venda)
 
     #-----------------LAYOUT JANELA TRANSAÇAO--------------------
     janela_transacao = tk.Tk()
