@@ -57,31 +57,30 @@ def cria_janela_transacao():
     #COMPRAS
     def registra_transacao_venda():
         chave_venda = produto_entrada.get()
-        quantidade_venda = quantidade_entrada.get()
+        quantidade_venda = int(quantidade_entrada.get())  # Convertendo para int aqui
         preco_venda = preco_entrada.get()
         tupla_venda = (quantidade_venda, preco_venda)
 
+        # Atualiza vendas e estoque
         atualiza_vendas(chave_venda, tupla_venda)
-        atualiza_estoque(chave_venda, int(tupla_venda[0]))
+        atualiza_estoque(chave_venda, quantidade_venda)
 
         print(dicEstoque)
         print(dicVenda)
 
     def atualiza_vendas(chave_venda, tupla_venda):
-        if chave_venda in dicVenda:
-            dicVenda[chave_venda].append(tupla_venda)
-        else:
-            dicVenda[chave_venda] = [tupla_venda]
+        # Usa .setdefault para evitar if-else
+        dicVenda.setdefault(chave_venda, []).append(tupla_venda)
 
     def atualiza_estoque(chave_venda, quantidade_venda):
-        if chave_venda in dicEstoque:
-            dicEstoque[chave_venda] -= quantidade_venda
-            if dicEstoque[chave_venda] <= 0:
-                dicEstoque.pop(chave_venda)
+        # Usa .get para evitar if-else
+        estoque_atual = dicEstoque.get(chave_venda, 0) - quantidade_venda
+
+        if estoque_atual <= 0:
+            dicEstoque.pop(chave_venda, None)
         else:
-            dicEstoque[chave_venda] = -quantidade_venda
-            if dicEstoque[chave_venda] < 0:
-                dicEstoque.pop(chave_venda)
+            dicEstoque[chave_venda] = estoque_atual
+
 
     #-----------------LAYOUT JANELA TRANSAÇAO--------------------
     janela_transacao = tk.Tk()
