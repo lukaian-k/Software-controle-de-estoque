@@ -21,8 +21,8 @@ def estoque_total():
      return dicEstoque
 
 def cria_janela_transacao():
-    #----------------------FUNCIONAMENTO DA JANELA TRANSAÇAO-----------------------------
     
+    #----------------------FUNCIONAMENTO DA JANELA TRANSAÇAO-----------------------------
     #VENDAS
     def registra_transacao_venda():
         chave_venda = produto_entrada.get()
@@ -47,6 +47,29 @@ def cria_janela_transacao():
         else:
             dicEstoque[chave_venda] = estoque_atual
 
+        
+    #COMPRAS
+    def registra_transacao_compra():
+        chave_compra = produto_entrada.get()
+        quantidade_compra = quantidade_entrada.get()
+        preco_compra = preco_entrada.get()
+        tupla_compra = (quantidade_compra, preco_compra)
+        if chave_compra in dicCompra:
+            lista_compra = dicCompra[chave_compra]
+            lista_compra.append(tupla_compra)
+            dicCompra[chave_compra] = listaCompra#---------------------->>> ESCREVER NO ARQUIVO
+        else:
+            lista_compra = []
+            lista_compra.append(tupla_compra)
+            dicCompra[chave_compra] = listaCompra
+        if chave_compra in dicEstoque:
+            dicEstoque[chave_compra] += int(tupla_compra[0])
+            
+        else:
+            dicEstoque[chave_compra] = int(tupla_compra[0])
+        
+        print(dicCompra) 
+        print(dicEstoque)
 
     #-----------------LAYOUT JANELA TRANSAÇAO--------------------
     janela_transacao = tk.Tk()
